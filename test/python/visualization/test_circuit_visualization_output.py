@@ -78,7 +78,7 @@ class TestCircuitVisualizationImplementation(QiskitVisualizationTestCase):
 
     # TODO: Enable for refactoring purposes and enable by default when we can
     # decide if the backend is available or not.
-    @unittest.skip('Useful for refactoring purposes, skipping by default.')
+    #@unittest.skip('Useful for refactoring purposes, skipping by default.')
     def test_latex_drawer(self):
         filename = self._get_resource_path('current_latex.png')
         qc = self.sample_circuit()

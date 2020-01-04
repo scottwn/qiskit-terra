@@ -263,6 +263,7 @@ def circuit_drawer(circuit,
     config = user_config.get_config()
     # Get default from config file else use text
     default_output = 'text'
+    print('circuit drawer ' + output)
     if config:
         default_output = config.get('circuit_drawer', 'text')
         if default_output == 'auto':
