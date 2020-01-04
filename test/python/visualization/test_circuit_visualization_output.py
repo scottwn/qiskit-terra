@@ -82,7 +82,9 @@ class TestCircuitVisualizationImplementation(QiskitVisualizationTestCase):
     def test_latex_drawer(self):
         filename = self._get_resource_path('current_latex.png')
         qc = self.sample_circuit()
+        print('sample circuit')
         circuit_drawer(qc, filename=filename, output='latex')
+        print('circuit drawer')
         self.assertImagesAreEqual(filename, self.latex_reference)
         os.remove(filename)
 

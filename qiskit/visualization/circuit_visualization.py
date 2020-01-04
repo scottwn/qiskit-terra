@@ -488,6 +488,7 @@ def _latex_circuit_drawer(circuit,
         ImportError: if pillow is not installed
     """
     tmpfilename = 'circuit'
+    print('latex drawer')
     with tempfile.TemporaryDirectory() as tmpdirname:
         tmppath = os.path.join(tmpdirname, tmpfilename + '.tex')
         _generate_latex_source(circuit, filename=tmppath,
@@ -496,19 +497,20 @@ def _latex_circuit_drawer(circuit,
                                reverse_bits=reverse_bits, justify=justify,
                                idle_wires=idle_wires, with_layout=with_layout)
         try:
-
+            print('subprocess start')
             subprocess.run(["pdflatex", "-halt-on-error",
                             "-output-directory={}".format(tmpdirname),
                             "{}".format(tmpfilename + '.tex')],
-                           stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
                            check=True)
         except OSError as ex:
+            print('exception')
             if ex.errno == errno.ENOENT:
                 logger.warning('WARNING: Unable to compile latex. '
                                'Is `pdflatex` installed? '
                                'Skipping latex circuit drawing...')
             raise
         except subprocess.CalledProcessError as ex:
+            print('exception')
             with open('latex_error.log', 'wb') as error_file:
                 error_file.write(ex.stdout)
             logger.warning('WARNING Unable to compile latex. '
@@ -516,6 +518,7 @@ def _latex_circuit_drawer(circuit,
                            'be found in latex_error.log')
             raise
         else:
+            print('try else')
             if not HAS_PIL:
                 raise ImportError('The latex drawer needs pillow installed. '
                                   'Run "pip install pillow" before using the '
@@ -534,6 +537,7 @@ def _latex_circuit_drawer(circuit,
                                'Is `poppler` installed? '
                                'Skipping circuit drawing...')
                 raise
+        print('return image')
         return image
 
 
@@ -560,6 +564,8 @@ def _generate_latex_source(circuit, filename=None,
     Returns:
         str: Latex string appropriate for writing to file.
     """
+    print('generate latex source')
+    print(circuit)
     qregs, cregs, ops = utils._get_layered_instructions(circuit,
                                                         reverse_bits=reverse_bits,
                                                         justify=justify, idle_wires=idle_wires)
@@ -567,6 +573,8 @@ def _generate_latex_source(circuit, filename=None,
         layout = circuit._layout
     else:
         layout = None
+
+    print('layout')
 
     qcimg = _latex.QCircuitImage(qregs, cregs, ops, scale, style=style,
                                  plot_barriers=plot_barriers,
@@ -576,6 +584,7 @@ def _generate_latex_source(circuit, filename=None,
         with open(filename, 'w') as latex_file:
             latex_file.write(latex)
 
+    print('return latex')
     return latex
 
 
