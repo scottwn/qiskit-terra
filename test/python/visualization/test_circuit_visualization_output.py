@@ -81,6 +81,7 @@ class TestCircuitVisualizationImplementation(QiskitVisualizationTestCase):
     #@unittest.skip('Useful for refactoring purposes, skipping by default.')
     def test_latex_drawer(self):
         filename = self._get_resource_path('current_latex.png')
+        print(filename)
         qc = self.sample_circuit()
         print('sample circuit')
         circuit_drawer(qc, filename=filename, output='latex')
@@ -104,7 +105,7 @@ class TestCircuitVisualizationImplementation(QiskitVisualizationTestCase):
         qc = self.sample_circuit()
         output = circuit_drawer(qc, filename=filename, output="text", line_length=-1)
         self.assertFilesAreEqual(filename, self.text_reference)
-        os.remove(filename)
+        #os.remove(filename)
         try:
             encode(str(output), encoding='cp437')
         except UnicodeEncodeError:

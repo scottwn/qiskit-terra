@@ -285,6 +285,7 @@ def circuit_drawer(circuit,
                                     with_layout=with_layout,
                                     fold=fold)
     elif output == 'latex':
+        print(filename)
         image = _latex_circuit_drawer(circuit, scale=scale,
                                       filename=filename, style=style,
                                       plot_barriers=plot_barriers,
@@ -490,6 +491,7 @@ def _latex_circuit_drawer(circuit,
     tmpfilename = 'circuit'
     print('latex drawer')
     with tempfile.TemporaryDirectory() as tmpdirname:
+        tmpdirname = '/Users/scottwn/qiskit-terra/test/python/'
         tmppath = os.path.join(tmpdirname, tmpfilename + '.tex')
         _generate_latex_source(circuit, filename=tmppath,
                                scale=scale, style=style,
@@ -565,6 +567,7 @@ def _generate_latex_source(circuit, filename=None,
         str: Latex string appropriate for writing to file.
     """
     print('generate latex source')
+    print(filename)
     print(circuit)
     qregs, cregs, ops = utils._get_layered_instructions(circuit,
                                                         reverse_bits=reverse_bits,
