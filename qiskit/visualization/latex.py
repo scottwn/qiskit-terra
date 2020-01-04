@@ -30,6 +30,7 @@ from qiskit.visualization import exceptions
 from .tools.pi_check import pi_check
 from .utils import generate_latex_label
 
+from pylatex import Document, Command, Package, Math
 
 class QCircuitImage:
     """This class contains methods to create \\LaTeX circuit images.
@@ -138,26 +139,17 @@ class QCircuitImage:
             string: for writing to a LaTeX file.
         """
         self._initialize_latex_array(aliases)
+        print(self._latex)
         self._build_latex_array(aliases)
-        header_1 = r"""% \documentclass[preview]{standalone}
-% If the image is too large to fit on this documentclass use
-\documentclass[draft]{beamer}
-"""
-        beamer_line = "\\usepackage[size=custom,height=%d,width=%d,scale=%.1f]{beamerposter}\n"
-        header_2 = r"""% instead and customize the height and width (in cm) to fit.
-% Large images may run out of memory quickly.
-% To fix this use the LuaLaTeX compiler, which dynamically
-% allocates memory.
-\usepackage[braket, qm]{qcircuit}
-\usepackage{amsmath}
-\pdfmapfile{+sansmathaccent.map}
-% \usepackage[landscape]{geometry}
-% Comment out the above line if using the beamer documentclass.
-\begin{document}
-\begin{equation*}"""
-        qcircuit_line = r"""
-    \Qcircuit @C=%.1fem @R=%.1fem @!R {
-"""
+        print(self._latex)
+        doc = Document(documentclass='beamer',document_options='draft')
+        doc.packages.append(Package('beamerposter',options=[
+            'size=custom', 'height=10', 'width=99', 'scale=0.7']))
+        qcircuit_line = r"""Qcircuit @C=%.1fem @R=%.1fem @!R """
+        doc.append(Math(data=Command(
+            qcircuit_line % (self.column_separation, self.row_separation),
+            arguments=arguments,
+            packages=[Package('qcircuit',options=['braket','qm']))))
         output = io.StringIO()
         output.write(header_1)
         output.write('%% img_width = %d, img_depth = %d\n' % (self.img_width, self.img_depth))
