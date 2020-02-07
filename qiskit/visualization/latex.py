@@ -30,8 +30,8 @@ from qiskit.visualization import exceptions
 from .tools.pi_check import pi_check
 from .utils import generate_latex_label
 
-from pylatex import Document, Command, Package, Math
-from pylatex.base_classes import ContainerCommand, CommandBase
+from pylatex import Document, Package, Math, NoEscape
+from pylatex.base_classes import ContainerCommand
 
 class QCircuit(ContainerCommand):
     """This is a pylatex subclass to hold commands that generate the circuit image."""
@@ -173,7 +173,8 @@ class QCircuitImage:
                 if j != self.img_depth:
                     qcircuit.append('&')
                 else:
-                    qcircuit.append('\\')
+                    qcircuit.append(r'\\')
+                    qcircuit.append('helloo')
         doc.append(Math(data=qcircuit))
         return doc.dumps()
 
