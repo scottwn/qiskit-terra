@@ -37,6 +37,7 @@ class QCircuit(ContainerCommand):
     """This is a pylatex subclass to hold commands that generate the circuit image."""
 
     def __init__(self, column_separation, row_separation):
+        super().__init__()
         qcircuit_line = r"""Qcircuit @C=%.1fem @R=%.1fem @!R """
         self.escape = False
         self._latex_name = qcircuit_line % (column_separation, row_separation)
@@ -155,7 +156,7 @@ class QCircuitImage:
         doc = Document(documentclass='beamer',document_options='draft')
         doc.packages.append(Package('beamerposter',options=[
             'size=custom', 'height=10', 'width=99', 'scale=0.7']))
-        qcircuit = Qcircuit(self.column_separation, self.row_separation)
+        qcircuit = QCircuit(self.column_separation, self.row_separation)
         for i in range(self.img_width):
             for j in range(self.img_depth + 1):
                 cell_str = self._latex[i][j]
@@ -173,7 +174,7 @@ class QCircuitImage:
                     qcircuit.append('&')
                 else:
                     qcircuit.append('\\')
-        doc.append(Math(qcircuit))
+        doc.append(Math(data=qcircuit))
         return doc.dumps()
 
     def _initialize_latex_array(self, aliases=None):
