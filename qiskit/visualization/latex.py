@@ -150,9 +150,7 @@ class QCircuitImage:
             string: for writing to a LaTeX file.
         """
         self._initialize_latex_array(aliases)
-        print(self._latex)
         self._build_latex_array(aliases)
-        print(self._latex)
         doc = Document(documentclass='beamer',document_options='draft')
         doc.packages.append(Package('beamerposter',options=[
             'size=custom', 'height=10', 'width=99', 'scale=0.7']))
@@ -174,7 +172,6 @@ class QCircuitImage:
                     qcircuit.append('&')
                 else:
                     qcircuit.append(r'\\')
-                    qcircuit.append('helloo')
         doc.append(Math(data=qcircuit))
         return doc.dumps()
 

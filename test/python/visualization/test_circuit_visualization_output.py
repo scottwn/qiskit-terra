@@ -78,16 +78,13 @@ class TestCircuitVisualizationImplementation(QiskitVisualizationTestCase):
 
     # TODO: Enable for refactoring purposes and enable by default when we can
     # decide if the backend is available or not.
-    #@unittest.skip('Useful for refactoring purposes, skipping by default.')
+    @unittest.skip('Useful for refactoring purposes, skipping by default.')
     def test_latex_drawer(self):
         filename = self._get_resource_path('current_latex.png')
-        print(filename)
         qc = self.sample_circuit()
-        print('sample circuit')
         circuit_drawer(qc, filename=filename, output='latex')
-        print('circuit drawer')
         self.assertImagesAreEqual(filename, self.latex_reference)
-        #os.remove(filename)
+        os.remove(filename)
 
     # TODO: Enable for refactoring purposes and enable by default when we can
     # decide if the backend is available or not.
@@ -105,7 +102,7 @@ class TestCircuitVisualizationImplementation(QiskitVisualizationTestCase):
         qc = self.sample_circuit()
         output = circuit_drawer(qc, filename=filename, output="text", line_length=-1)
         self.assertFilesAreEqual(filename, self.text_reference)
-        #os.remove(filename)
+        os.remove(filename)
         try:
             encode(str(output), encoding='cp437')
         except UnicodeEncodeError:
