@@ -16,8 +16,7 @@
 Fake backend supporting OpenPulse.
 """
 
-from qiskit.providers.models import (GateConfig, PulseBackendConfiguration,
-                                     PulseDefaults, Command, UchannelLO)
+from qiskit.providers.models import PulseBackendConfiguration, PulseDefaults, Command
 from qiskit.qobj import PulseQobjInstruction
 from .fake_backend import FakeBackend
 

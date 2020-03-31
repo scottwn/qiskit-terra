@@ -65,3 +65,5 @@ class TestBackendConfiguration(QiskitTestCase):
             self.assertAlmostEqual(self.config.rep_times[i], time)
         for i, time in enumerate(_rep_times_us):
             self.assertEqual(round(self.config.rep_times[i]*1e6), time)
+        for rep_time in self.config.to_dict()['rep_times']:
+            self.assertGreater(rep_time, 0)
