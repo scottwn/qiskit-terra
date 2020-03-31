@@ -28,45 +28,45 @@ class FakeOpenPulse2Q(FakeBackend):
     """A fake 2 qubit backend for pulse test."""
 
     def __init__(self):
-        configuration = PulseBackendConfiguration(
-            backend_name='fake_openpulse_2q',
-            backend_version='0.0.0',
-            n_qubits=2,
-            meas_levels=[0, 1, 2],
-            basis_gates=['u1', 'u2', 'u3', 'cx', 'id'],
-            simulator=False,
-            local=True,
-            conditional=True,
-            open_pulse=True,
-            memory=False,
-            max_shots=65536,
-            gates=[GateConfig(name='TODO', parameters=[], qasm_def='TODO')],
-            coupling_map=[[0, 1]],
-            n_registers=2,
-            n_uchannels=2,
-            u_channel_lo=[
-                [UchannelLO(q=0, scale=1. + 0.j)],
-                [UchannelLO(q=0, scale=-1. + 0.j), UchannelLO(q=1, scale=1. + 0.j)]
+        raw_config = {
+            'backend_name': 'fake_openpulse_2q',
+            'backend_version': '0.0.0',
+            'n_qubits': 2,
+            'meas_levels': [0, 1, 2],
+            'basis_gates': ['u1', 'u2', 'u3', 'cx', 'id'],
+            'simulator': False,
+            'local': True,
+            'conditional': True,
+            'open_pulse': True,
+            'memory': False,
+            'max_shots': 65536,
+            'gates': [{'name': 'TODO', 'parameters': [], 'qasm_def': 'TODO'}],
+            'coupling_map': [[0, 1]],
+            'n_registers': 2,
+            'n_uchannels': 2,
+            'u_channel_lo': [
+                [{'q': 0, 'scale': 1. + 0.j}],
+                [{'q': 0, 'scale': -1. + 0.j}, {'q': 1, 'scale': 1. + 0.j}]
             ],
-            meas_level=[1, 2],
-            qubit_lo_range=[[4.5, 5.5], [4.5, 5.5]],
-            meas_lo_range=[[6.0, 7.0], [6.0, 7.0]],
-            dt=1.3333,
-            dtm=10.5,
-            rep_times=[100, 250, 500, 1000],
-            meas_map=[[0, 1]],
-            channel_bandwidth=[
+            'meas_level': [1, 2],
+            'qubit_lo_range': [[4.5, 5.5], [4.5, 5.5]],
+            'meas_lo_range': [[6.0, 7.0], [6.0, 7.0]],
+            'dt': 1.3333,
+            'dtm': 10.5,
+            'rep_times': [100, 250, 500, 1000],
+            'meas_map': [[0, 1]],
+            'channel_bandwidth': [
                 [-0.2, 0.4], [-0.3, 0.3], [-0.3, 0.3],
                 [-0.02, 0.02], [-0.02, 0.02], [-0.02, 0.02]
             ],
-            meas_kernels=['kernel1'],
-            discriminators=['max_1Q_fidelity'],
-            acquisition_latency=[[100, 100], [100, 100]],
-            conditional_latency=[
+            'meas_kernels': ['kernel1'],
+            'discriminators': ['max_1Q_fidelity'],
+            'acquisition_latency': [[100, 100], [100, 100]],
+            'conditional_latency': [
                 [100, 1000], [1000, 100], [100, 1000],
                 [1000, 100], [100, 1000], [1000, 100]
             ],
-            hamiltonian={
+            'hamiltonian': {
                 'h_str': ["np.pi*(2*v0-alpha0)*O0", "np.pi*alpha0*O0*O0", "2*np.pi*r*X0||D0",
                           "2*np.pi*r*X0||U1", "2*np.pi*r*X1||U0", "np.pi*(2*v1-alpha1)*O1",
                           "np.pi*alpha1*O1*O1", "2*np.pi*r*X1||D1", "2*np.pi*j*(Sp0*Sm1+Sm0*Sp1)"],
@@ -79,8 +79,8 @@ class FakeOpenPulse2Q(FakeBackend):
                           'alpha0': -0.33,
                           'alpha1': -0.33}
             }
-        )
-
+        }
+        configuration = PulseBackendConfiguration.from_dict(raw_config)
         self._defaults = PulseDefaults.from_dict({
             'qubit_freq_est': [4.9, 5.0],
             'meas_freq_est': [6.5, 6.6],
